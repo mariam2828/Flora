@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- الألوان اللي طلبها ال-layout -->
-    <color name="pinkAccent">#FF4081</color>    <!-- قابل للتعديل لو عندك لون تاني -->
-    <color name="pink700">#C2185B</color>
-    <color name="brown700">#5D4037</color>
-
-    <!-- ألوان شائعة ممكن تحتاجيها كمان -->
-    <color name="colorPrimary">#FF4081</color>
-    <color name="colorPrimaryVariant">#F06292</color>
-    <color name="colorOnPrimary">#FFFFFF</color>
+  <!--  الألوان اللي طلبها ال-layout  -->
+<color name="pinkAccent">#FF4081</color>
+<!--  قابل للتعديل لو عندك لون تاني  -->
+<color name="pink700">#C2185B</color>
+<color name="brown700">#5D4037</color>
+<color name="pink_primary">#FF69B4</color>
+<color name="pink_dark">#C71585</color>
+<color name="background_light">#F7F5F7</color>
+<color name="text_dark">#333333</color>
+<color name="text_grey">#555555</color>
+<color name="white">#FFFFFF</color>
+<color name="dot_active_color">#FF69B4</color>
+<color name="dot_inactive_color">#F0B5C9</color>
+<!--  ألوان شائعة ممكن تحتاجيها كمان  -->
+<color name="colorPrimary">#FF4081</color>
+<color name="colorPrimaryVariant">#F06292</color>
+<color name="colorOnPrimary">#FFFFFF</color>
 </resources>
