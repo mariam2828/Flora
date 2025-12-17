@@ -110,13 +110,10 @@ public class Home extends AppCompatActivity {
 
             holder.add.setOnClickListener(v -> {
 
-                // 1. الإضافة إلى سلة التسوق (لا تزال ضرورية)
-                Home.addItemToCart(f); // الآن هذا السطر لن يسبب خطأ بعد إضافة الدوال في الخطوة أ.
+                Home.addItemToCart(f);
 
-                // 2. رسالة تأكيد بسيطة (اختياري)
                 android.widget.Toast.makeText(ctx, f.name + " added to cart", android.widget.Toast.LENGTH_SHORT).show();
 
-                // 3. الانتقال مباشرة إلى شاشة CheckOut (حسب طلبك)
                 Intent intent = new Intent(ctx, CheckOut.class);
                 ctx.startActivity(intent);
             });
