@@ -5,7 +5,6 @@ import java.util.List;
 
 public class ShoppingCart {
 
-    // هنا نستخدم Flower Model الموجودة داخل Home.java
     private static List<Home.Flower> items = new ArrayList<>();
 
     private ShoppingCart() {}
@@ -33,4 +32,5 @@ public class ShoppingCart {
     public static boolean isEmpty() {
         return items.isEmpty();
     }
+
 }
