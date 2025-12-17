@@ -1,5 +1,6 @@
 package com.example.flora;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +25,6 @@ public class CheckOut extends AppCompatActivity {
     TextView tvTotalPrice;
     Button btnConfirm;
 
-    // كلاس داخلي لتمثيل العنصر المجمع (الزهرة والكمية)
-    // هذا الكلاس ضروري لحمل البيانات المجمعة
     public static class CartItemData {
         Home.Flower flower;
         int quantity;
@@ -34,7 +33,6 @@ public class CheckOut extends AppCompatActivity {
             this.quantity = q;
         }
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,52 +52,40 @@ public class CheckOut extends AppCompatActivity {
                 Toast.makeText(this, "Your cart is empty. Add flowers first!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Order Confirmed! Total: $" + Home.getCartTotal(), Toast.LENGTH_LONG).show();
+
                 Home.clearCart();
+
+                Intent intent = new Intent(CheckOut.this, Home.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 finish();
             }
         });
     }
 
-    // دالة تقوم بتجميع العناصر المتشابهة في قائمة جديدة
     private List<CartItemData> groupCartItems(List<Home.Flower> cartList) {
-
-        // نستخدم HashMap مؤقت لتخزين العناصر الفريدة وكمياتها
         Map<String, CartItemData> groupedMap = new HashMap<>();
 
         for (Home.Flower item : cartList) {
-            // نستخدم تركيبة من خصائص الزهرة كمفتاح (بدلاً من equals/hashCode المعقد)
             String key = item.name + item.price + item.imageRes;
 
             if (groupedMap.containsKey(key)) {
-                // إذا كان المفتاح موجوداً، نزيد الكمية
                 groupedMap.get(key).quantity++;
             } else {
-                // إذا كان المفتاح جديداً، نضيف العنصر بكمية 1
                 groupedMap.put(key, new CartItemData(item, 1));
             }
         }
-
-        // نُرجع قائمة بالقيم (Values) من الـ Map، وهي العناصر المجمعة
         return new ArrayList<>(groupedMap.values());
     }
 
-
     private void updateCartDisplay() {
-        // نستخدم الدالة الجديدة groupCartItems
         List<CartItemData> groupedList = groupCartItems(Home.cartItems);
-
         CartAdapter adapter = new CartAdapter(groupedList);
         recyclerView.setAdapter(adapter);
-
         tvTotalPrice.setText("$" + Home.getCartTotal());
     }
 
-
-    // --------------------------------------------
-    // INNER CLASS — Adapter لعرض سلة التسوق (يستخدم CartItemData)
-    // --------------------------------------------
     class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
-
         private List<CartItemData> cartList;
 
         public CartAdapter(List<CartItemData> cartList) {
@@ -108,8 +94,7 @@ public class CheckOut extends AppCompatActivity {
 
         @Override
         public CartHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_cart, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart, parent, false);
             return new CartHolder(v);
         }
 
@@ -121,25 +106,18 @@ public class CheckOut extends AppCompatActivity {
 
             holder.tvName.setText(item.name);
             holder.imgItem.setImageResource(item.imageRes);
-
-            // عرض الكمية
             holder.tvQuantity.setText("Qty: x" + quantity);
-
-            // عرض السعر الإجمالي لهذا العنصر (السعر * الكمية)
-            int itemTotalPrice = item.price * quantity;
-            holder.tvPrice.setText("$" + itemTotalPrice);
+            holder.tvPrice.setText("$" + (item.price * quantity));
         }
 
         @Override
         public int getItemCount() {
             return cartList.size();
         }
-//nadoda
+
         class CartHolder extends RecyclerView.ViewHolder {
             ImageView imgItem;
-            TextView tvName;
-            TextView tvPrice;
-            TextView tvQuantity;
+            TextView tvName, tvPrice, tvQuantity;
 
             CartHolder(View v) {
                 super(v);
