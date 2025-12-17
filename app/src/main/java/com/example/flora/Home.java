@@ -21,6 +21,24 @@ import java.util.List;
 import java.util.Random;
 
 public class Home extends AppCompatActivity {
+    public static List<Flower> cartItems = new ArrayList<>();
+
+    public static void addItemToCart(Flower item) {
+        cartItems.add(item);
+    }
+
+    public static int getCartTotal() {
+        int total = 0;
+        for (Flower item : cartItems) {
+            total += item.price;
+        }
+        return total;
+    }
+
+    public static void clearCart() {
+        cartItems.clear();
+    }
+    // --------------------------------------------
 
     RecyclerView recycler;
     FloraAdapter adapter;
@@ -91,7 +109,21 @@ public class Home extends AppCompatActivity {
             holder.image.setImageResource(f.imageRes);
 
             holder.add.setOnClickListener(v -> {
+
+                // 1. الإضافة إلى سلة التسوق (لا تزال ضرورية)
+                Home.addItemToCart(f); // الآن هذا السطر لن يسبب خطأ بعد إضافة الدوال في الخطوة أ.
+
+                // 2. رسالة تأكيد بسيطة (اختياري)
+                android.widget.Toast.makeText(ctx, f.name + " added to cart", android.widget.Toast.LENGTH_SHORT).show();
+
+                // 3. الانتقال مباشرة إلى شاشة CheckOut (حسب طلبك)
                 Intent intent = new Intent(ctx, CheckOut.class);
+                ctx.startActivity(intent);
+            });
+
+            // When card is clicked  go to Details page
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(ctx, Details.class);
                 intent.putExtra("name", f.name);
                 intent.putExtra("price", f.price);
                 intent.putExtra("imageRes", f.imageRes);
