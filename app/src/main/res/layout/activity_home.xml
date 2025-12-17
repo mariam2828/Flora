@@ -81,8 +81,6 @@
             android:clipToPadding="false"
             android:paddingBottom="16dp"/>
 
-        <!-- bottom bar removed as requested -->
-        <!-- If you want to hide it instead of removing, set android:visibility="gone" on the container -->
 
     </LinearLayout>
 
