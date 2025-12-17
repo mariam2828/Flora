@@ -40,10 +40,15 @@ public class Details extends AppCompatActivity {
         Button btnCheckout = findViewById(R.id.btn_checkout);
 
         btnCheckout.setOnClickListener(v -> {
+            // 1. إنشاء كائن Flower من البيانات الحالية
+            Home.Flower currentFlower = new Home.Flower(name, price, imageRes);
+
+            // 2. إضافة العنصر إلى سلة التسوق باستخدام الدالة الثابتة في Home
+            Home.addItemToCart(currentFlower);
+            android.widget.Toast.makeText(Details.this, name + " added to cart", android.widget.Toast.LENGTH_SHORT).show();
+
+            // 3. الانتقال إلى شاشة CheckOut (لعرض السلة)
             Intent intent = new Intent(Details.this, CheckOut.class);
-            intent.putExtra("name", name);
-            intent.putExtra("price", price);
-            intent.putExtra("imageRes", imageRes);
             startActivity(intent);
         });
 
