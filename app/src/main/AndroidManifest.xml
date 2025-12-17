@@ -23,7 +23,6 @@
         </activity>
         <activity android:name=".Home" />
 
-        <!-- CheckOut activity (ليست Launcher) -->
         <activity
             android:name=".CheckOut"
             android:exported="false" />
